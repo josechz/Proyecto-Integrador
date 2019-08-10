@@ -12,8 +12,7 @@
 #include "r_fmi.h"
 #include "r_fmi_api.h"
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 /** CGC Instance */
 extern const cgc_instance_t g_cgc;

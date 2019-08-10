@@ -263,6 +263,9 @@ Synergy Configuration
   Module "External IRQ Driver on r_icu"
     Parameter Checking: Default (BSP)
     
+  Module "Timer Driver on r_gpt"
+    Parameter Checking: Default (BSP)
+    
   HAL
     Instance "g_fmi FMI Driver on r_fmi"
       Name: g_fmi
@@ -285,5 +288,21 @@ Synergy Configuration
       Interrupt enabled after initialization: True
       Callback: button_callback_SW5
       Pin Interrupt Priority: Priority 12
+      
+    Instance "g_timer0 Timer Driver on r_gpt"
+      Name: g_timer0
+      Channel: 0
+      Mode: Periodic
+      Period Value: 500
+      Period Unit: Milliseconds
+      Duty Cycle Value: 50
+      Duty Cycle Unit: Unit Raw Counts
+      Auto Start: True
+      GTIOCA Output Enabled: False
+      GTIOCA Stop Level: Pin Level Low
+      GTIOCB Output Enabled: False
+      GTIOCB Stop Level: Pin Level Low
+      Callback: NULL
+      Overflow Interrupt Priority: Disabled
       
   Messaging

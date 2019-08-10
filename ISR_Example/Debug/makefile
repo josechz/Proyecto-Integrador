@@ -12,6 +12,7 @@ RM := rm -rf
 -include sources.mk
 -include synergy/ssp/src/driver/r_ioport/subdir.mk
 -include synergy/ssp/src/driver/r_icu/subdir.mk
+-include synergy/ssp/src/driver/r_gpt/subdir.mk
 -include synergy/ssp/src/driver/r_fmi/subdir.mk
 -include synergy/ssp/src/driver/r_elc/subdir.mk
 -include synergy/ssp/src/driver/r_cgc/hw/subdir.mk
@@ -41,33 +42,33 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
-ISR_1.srec \
+ISR_Example.srec \
 
 SECONDARY_SIZE += \
-ISR_1.siz \
+ISR_Example.siz \
 
 
 # All Target
-all: ISR_1.elf secondary-outputs
+all: ISR_Example.elf secondary-outputs
 
 # Tool invocations
-ISR_1.elf: $(OBJS) $(USER_OBJS)
+ISR_Example.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C Linker'
-	$(file > ISR_1.elf.in,-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g3 -T "C:\\Users\\SEI202\\e2_studio\\workspace\\pract1\\ISR_1\\script\\S7G2.ld" -Xlinker --gc-sections -L "C:\\Users\\SEI202\\e2_studio\\workspace\\pract1\\ISR_1\\synergy\\ssp\\src\\bsp\\cmsis\\DSP_Lib\\cm4_gcc" -Wl,-Map,"ISR_1.map" --specs=nano.specs --specs=rdimon.specs -o "ISR_1.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
-	arm-none-eabi-gcc @"ISR_1.elf.in"
+	$(file > ISR_Example.elf.in,-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g3 -T "C:\\Users\\SEI201\\git\\Proyecto-Integrador\\ISR_Example\\script\\S7G2.ld" -Xlinker --gc-sections -L "C:\\Users\\SEI201\\git\\Proyecto-Integrador\\ISR_Example\\synergy\\ssp\\src\\bsp\\cmsis\\DSP_Lib\\cm4_gcc" -Wl,-Map,"ISR_Example.map" --specs=nano.specs --specs=rdimon.specs -o "ISR_Example.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
+	arm-none-eabi-gcc @"ISR_Example.elf.in"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-ISR_1.srec: ISR_1.elf
+ISR_Example.srec: ISR_Example.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	arm-none-eabi-objcopy -O srec "ISR_1.elf"  "ISR_1.srec"
+	arm-none-eabi-objcopy -O srec "ISR_Example.elf"  "ISR_Example.srec"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-ISR_1.siz: ISR_1.elf
+ISR_Example.siz: ISR_Example.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
-	arm-none-eabi-size --format=berkeley "ISR_1.elf"
+	arm-none-eabi-size --format=berkeley "ISR_Example.elf"
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -103,7 +104,7 @@ ifneq ($(strip $(C_DEPS)),)
 	-@ xargs -s 6000 -t -a clean_C_DEPS.tmp $(RM)
 	-@$(RM) clean_C_DEPS.tmp
 endif
-	-$(RM)  ISR_1.elf
+	-$(RM)  ISR_Example.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_SIZE)
